@@ -39,15 +39,15 @@ After you change the code: `npm run build`, then **Reload** on the extension car
 
 ## How to navigate
 
-The popup has three tabs at the bottom.
+The popup has three tabs at the bottom. Settings and Activity also have **← Timer** at the top (and again at the bottom of Settings).
 
 | Tab | What it is |
 | --- | --- |
 | **Timer** | The clock. Start, pause, skip, restart, reset. |
 | **Activity** | Today / week / streak, a 7-day chart, and a month heat map. |
-| **Settings** | Durations, presets, sound, and the account that syncs profiles. |
+| **Settings** | Session lengths first. Sound and auto-start under that. Account last. |
 
-**Sign in** in the header jumps to Settings → Account.
+**Sign in** (amber) in the header jumps to Settings → Account.
 
 ---
 
@@ -84,13 +84,12 @@ Open **Activity**. **Week** is the last seven days plus a daily list. **Month** 
 
 <img src="docs/shots/settings.png" alt="Settings presets and durations" width="280" />
 
-Open **Settings**.
+Open **Settings**. **← Timer** takes you back.
 
 - **Classic 25/5** is Pomodoro. **Deep 50/10** and **Sprint 15/3** are one click. Or type your own minutes.
-- Focus, break, long break, rounds, and daily goal are whatever you set.
-- Auto-start break / auto-start focus if you want the next block to begin on its own.
-- Sound on/off, volume, and **Play** to preview the chime.
-- **Save changes** writes the rest of the form.
+- Focus, break, long break, rounds, and daily goal are the session.
+- Auto-start and sound sit under **While it runs**.
+- **Save changes** writes the form. If you edited lengths, Save also appears in the header.
 
 ### 5. Use it on another Chrome profile
 
@@ -100,7 +99,7 @@ Chrome profiles do not share extension storage. Sign in once per profile with th
 2. On the other profile, Settings → **Sign in**
 3. Sessions, streak, and settings merge
 
-Needs a `.env.local` with Supabase keys (see Development). Without keys, the timer still works on that profile only.
+Cloud sync needs the Supabase project wired up once — `docs/supabase.md`. Without that, the timer still works on this profile only.
 
 ---
 
@@ -143,16 +142,7 @@ npm run preview        # Vite, open /popup.html
 npm run icons          # rebuild toolbar icons
 ```
 
-`.env.local`:
-
-```
-VITE_SUPABASE_URL=
-VITE_SUPABASE_PUBLISHABLE_KEY=
-```
-
-The UI loads without those keys. Account sync stays off until they are set.
-
-Apply `supabase/migrations/` on the Supabase project if you want cloud sync.
+Cloud sync: `docs/supabase.md`. `.env.local` is only for the build. The popup never mentions it.
 
 To regenerate README images:
 

@@ -58,11 +58,5 @@ Leave the rest unchecked. Focus-session history is app data on the device (and o
 **Privacy policy URL**
 
 ```
-https://github.com/shahjacobb/Forge-Extension/blob/cursor/sukoon-cover-serif-c024/docs/privacy.md
-```
-
-After this branch is on `main`, switch the URL to:
-
-```
 https://github.com/shahjacobb/Forge-Extension/blob/main/docs/privacy.md
 ```

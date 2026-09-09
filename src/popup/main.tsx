@@ -83,21 +83,27 @@ const SettingsIcon = () => (
   </svg>
 );
 
+const BackIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <path d="M8.6 3.2 4.8 7l3.8 3.8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 const TimerRing = ({
   progress,
-  mode,
-  running
+  running,
+  paused
 }: {
   progress: number;
-  mode: TimerMode;
   running: boolean;
+  paused: boolean;
 }) => {
   const size = 228;
   const stroke = 10;
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - Math.max(0, Math.min(100, progress)) / 100);
-  const color = mode === "focus" ? "var(--primary)" : mode === "longBreak" ? "var(--gold)" : "var(--success)";
+  const color = running ? "var(--amber)" : paused ? "var(--pearl)" : "var(--ready)";
 
   return (
     <svg viewBox={`0 0 ${size} ${size}`}>
@@ -444,34 +450,54 @@ const App = () => {
     <main className="app">
       <div className="frame">
         <header className="topbar">
-          <div className="brand">
-            <Mark />
-            <div className="brand-copy">
-              <div className="brand-name">Lahza</div>
-              <div className="brand-sub">
-                {greetingName ? `Good focus, ${greetingName}` : formatDate(new Date(now))}
+          {view === "timer" ? (
+            <div className="brand">
+              <Mark />
+              <div className="brand-copy">
+                <div className="brand-name">Lahza</div>
+                <div className="brand-sub">
+                  {greetingName ? `Good focus, ${greetingName}` : formatDate(new Date(now))}
+                </div>
               </div>
             </div>
-          </div>
-          <button
-            className={`account-chip${authUser ? "" : " guest"}`}
-            onClick={() => setView("settings")}
-          >
-            <span className="dot" />
-            <span>{authUser ? "Synced" : "Sign in"}</span>
-          </button>
+          ) : (
+            <button className="back" type="button" onClick={() => setView("timer")}>
+              <BackIcon />
+              Timer
+            </button>
+          )}
+          {view === "settings" && hasSettingsChanges ? (
+            <button className="cta save compact" onClick={() => void saveSettings()}>
+              Save
+            </button>
+          ) : (
+            <button
+              className={`account-chip${authUser ? "" : " guest"}`}
+              onClick={() => {
+                setView("settings");
+                window.setTimeout(() => document.getElementById("account")?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+              }}
+            >
+              <span className="dot" />
+              <span>{authUser ? "Synced" : "Sign in"}</span>
+            </button>
+          )}
         </header>
 
         {view === "timer" ? (
           <section className="view timer-view">
             <div className="ring-wrap">
-              <TimerRing progress={progressPct} mode={state.timer.mode} running={isRunning} />
+              <TimerRing
+                progress={progressPct}
+                running={isRunning}
+                paused={state.timer.status === "paused"}
+              />
               <div className="ring-center">
                 <div className="mode-kicker">{modeLabel(state.timer.mode)}</div>
                 <div className="clock">{formatClock(remainingMs)}</div>
                 <div className="status-line">
                   <span
-                    className={`status-dot${isRunning ? " live" : ""}${state.timer.mode === "break" ? " break" : ""}${state.timer.mode === "longBreak" ? " long" : ""}`}
+                    className={`status-dot${isRunning ? " live" : state.timer.status === "paused" ? " hold" : " idle"}`}
                   />
                   {statusText}
                 </div>
@@ -492,7 +518,7 @@ const App = () => {
 
             <div className="actions">
               <button
-                className={`cta${isRunning ? " pause" : ""}`}
+                className={`cta${isRunning ? " live" : state.timer.status === "paused" ? " resume" : " ready"}`}
                 onClick={() => void act({ type: isRunning ? "pause" : "start" })}
               >
                 {isRunning ? "Pause" : state.timer.status === "paused" ? `Resume ${modeLabel(state.timer.mode).toLowerCase()}` : `Start ${modeLabel(state.timer.mode).toLowerCase()}`}
@@ -530,7 +556,7 @@ const App = () => {
             {!authUser && cloudConfigured ? (
               <div className="sync-banner">
                 <p>Sign in to keep this timer in every Chrome profile.</p>
-                <button onClick={() => setView("settings")}>Account</button>
+                <button onClick={() => setView("settings")}>Sign in</button>
               </div>
             ) : null}
           </section>
@@ -634,156 +660,138 @@ const App = () => {
         ) : null}
 
         {view === "settings" ? (
-          <section className="view">
-            <div className="heading">
+          <section className="view settings-view">
+            <div className="heading tight">
               <div>
                 <h1>Settings</h1>
-                <p>Durations, sound, and the account that follows you across Chrome profiles.</p>
+                <p>Session lengths. Everything else is optional.</p>
               </div>
             </div>
 
-            <div className="presets">
-              {[
-                { label: "Classic", focus: 25, brk: 5, long: 15 },
-                { label: "Deep", focus: 50, brk: 10, long: 20 },
-                { label: "Sprint", focus: 15, brk: 3, long: 10 }
-              ].map((preset) => {
-                const active =
-                  settingsDraft?.focusMinutes === preset.focus &&
-                  settingsDraft?.breakMinutes === preset.brk &&
-                  settingsDraft?.longBreakMinutes === preset.long;
-                return (
-                  <button key={preset.label} className={`preset${active ? " active" : ""}`} onClick={() => applyPreset(preset.focus, preset.brk, preset.long)}>
-                    <strong>{preset.label}</strong>
-                    {preset.focus}/{preset.brk}
-                  </button>
-                );
-              })}
-            </div>
+            <section className="settings-block">
+              <div className="presets">
+                {[
+                  { label: "Classic", focus: 25, brk: 5, long: 15 },
+                  { label: "Deep", focus: 50, brk: 10, long: 20 },
+                  { label: "Sprint", focus: 15, brk: 3, long: 10 }
+                ].map((preset) => {
+                  const active =
+                    settingsDraft?.focusMinutes === preset.focus &&
+                    settingsDraft?.breakMinutes === preset.brk &&
+                    settingsDraft?.longBreakMinutes === preset.long;
+                  return (
+                    <button key={preset.label} className={`preset${active ? " active" : ""}`} onClick={() => applyPreset(preset.focus, preset.brk, preset.long)}>
+                      <strong>{preset.label}</strong>
+                      {preset.focus}/{preset.brk}
+                    </button>
+                  );
+                })}
+              </div>
 
-            <section className="settings-group">
-              {(
-                [
-                  ["focusMinutes", "Focus", "Length of a deep work block."],
-                  ["breakMinutes", "Break", "Short reset between rounds."],
-                  ["longBreakMinutes", "Long break", "After every fourth focus."],
-                  ["sessionsUntilLongBreak", "Rounds", "Focus sessions before a long break."],
-                  ["dailyGoalMinutes", "Daily goal", "Target focus minutes for the day."]
-                ] as const
-              ).map(([key, label, help]) => (
-                <label className="settings-row" key={key}>
-                  <div className="settings-copy">
+              <div className="settings-cluster">
+                {(
+                  [
+                    ["focusMinutes", "Focus"],
+                    ["breakMinutes", "Break"],
+                    ["longBreakMinutes", "Long break"],
+                    ["sessionsUntilLongBreak", "Rounds"],
+                    ["dailyGoalMinutes", "Daily goal"]
+                  ] as const
+                ).map(([key, label]) => (
+                  <label className="settings-row" key={key}>
                     <span className="settings-label">{label}</span>
-                    <p>{help}</p>
-                  </div>
+                    <input
+                      className="settings-input"
+                      type="number"
+                      min={key === "dailyGoalMinutes" ? 0 : 1}
+                      value={settingsDraft?.[key] ?? state.settings[key]}
+                      onChange={(event) =>
+                        setSettingsDraft((current) => ({
+                          ...(current ?? state.settings),
+                          [key]: Number(event.target.value) || 0
+                        }))
+                      }
+                    />
+                  </label>
+                ))}
+              </div>
+            </section>
+
+            <section className="settings-block">
+              <div className="settings-kicker">While it runs</div>
+              <div className="settings-cluster">
+                <label className="settings-row">
+                  <span className="settings-label">Start breaks automatically</span>
                   <input
-                    className="settings-input"
-                    type="number"
-                    min={key === "dailyGoalMinutes" ? 0 : 1}
-                    value={settingsDraft?.[key] ?? state.settings[key]}
+                    className="settings-toggle"
+                    type="checkbox"
+                    checked={settingsDraft?.autoStartBreaks ?? state.settings.autoStartBreaks}
                     onChange={(event) =>
-                      setSettingsDraft((current) => ({
-                        ...(current ?? state.settings),
-                        [key]: Number(event.target.value) || 0
-                      }))
+                      setSettingsDraft((current) => ({ ...(current ?? state.settings), autoStartBreaks: event.target.checked }))
                     }
                   />
                 </label>
-              ))}
-
-              <label className="settings-row">
-                <div className="settings-copy">
-                  <span className="settings-label">Start breaks automatically</span>
-                  <p>When focus ends, the break begins on its own.</p>
-                </div>
-                <input
-                  className="settings-toggle"
-                  type="checkbox"
-                  checked={settingsDraft?.autoStartBreaks ?? state.settings.autoStartBreaks}
-                  onChange={(event) =>
-                    setSettingsDraft((current) => ({ ...(current ?? state.settings), autoStartBreaks: event.target.checked }))
-                  }
-                />
-              </label>
-
-              <label className="settings-row">
-                <div className="settings-copy">
+                <label className="settings-row">
                   <span className="settings-label">Start focus automatically</span>
-                  <p>When a break ends, the next focus starts immediately.</p>
-                </div>
-                <input
-                  className="settings-toggle"
-                  type="checkbox"
-                  checked={settingsDraft?.autoStartFocus ?? state.settings.autoStartFocus}
-                  onChange={(event) =>
-                    setSettingsDraft((current) => ({ ...(current ?? state.settings), autoStartFocus: event.target.checked }))
-                  }
-                />
-              </label>
-
-              <label className="settings-row">
-                <div className="settings-copy">
-                  <span className="settings-label">Sound effects</span>
-                  <p>Layered chimes for start, pause, and session complete.</p>
-                </div>
-                <input
-                  className="settings-toggle"
-                  type="checkbox"
-                  checked={settingsDraft?.soundEnabled ?? state.settings.soundEnabled}
-                  onChange={(event) =>
-                    setSettingsDraft((current) => ({ ...(current ?? state.settings), soundEnabled: event.target.checked }))
-                  }
-                />
-              </label>
-
-              <div className="settings-row">
-                <div className="settings-copy">
-                  <span className="settings-label">Volume</span>
-                  <p>Preview the completion chime.</p>
-                </div>
-                <div className="sound-row">
                   <input
-                    className="range"
-                    type="range"
-                    min={0}
-                    max={1}
-                    step={0.05}
-                    value={settingsDraft?.soundVolume ?? state.settings.soundVolume}
+                    className="settings-toggle"
+                    type="checkbox"
+                    checked={settingsDraft?.autoStartFocus ?? state.settings.autoStartFocus}
                     onChange={(event) =>
-                      setSettingsDraft((current) => ({
-                        ...(current ?? state.settings),
-                        soundVolume: Number(event.target.value)
-                      }))
+                      setSettingsDraft((current) => ({ ...(current ?? state.settings), autoStartFocus: event.target.checked }))
                     }
                   />
-                  <button className="ghost" onClick={() => void act({ type: "previewSound", payload: { chime: "focus" as ChimeType } })}>
-                    Play
-                  </button>
+                </label>
+                <label className="settings-row">
+                  <span className="settings-label">Sound</span>
+                  <input
+                    className="settings-toggle"
+                    type="checkbox"
+                    checked={settingsDraft?.soundEnabled ?? state.settings.soundEnabled}
+                    onChange={(event) =>
+                      setSettingsDraft((current) => ({ ...(current ?? state.settings), soundEnabled: event.target.checked }))
+                    }
+                  />
+                </label>
+                <div className="settings-row">
+                  <span className="settings-label">Volume</span>
+                  <div className="sound-row">
+                    <input
+                      className="range"
+                      type="range"
+                      min={0}
+                      max={1}
+                      step={0.05}
+                      value={settingsDraft?.soundVolume ?? state.settings.soundVolume}
+                      onChange={(event) =>
+                        setSettingsDraft((current) => ({
+                          ...(current ?? state.settings),
+                          soundVolume: Number(event.target.value)
+                        }))
+                      }
+                    />
+                    <button className="ghost" onClick={() => void act({ type: "previewSound", payload: { chime: "focus" as ChimeType } })}>
+                      Play
+                    </button>
+                  </div>
                 </div>
               </div>
-
             </section>
 
-            <button className="cta full" disabled={!hasSettingsChanges} onClick={() => void saveSettings()}>
+            <button className="cta full save" disabled={!hasSettingsChanges} onClick={() => void saveSettings()}>
               Save changes
             </button>
 
-            <section className="account-card">
+            <section className="account-card" id="account">
               <div className="account-header">
                 <span className="stat-label">Account</span>
-                <h2>{authUser ? "Synced across Chrome profiles" : "Use Lahza on every profile"}</h2>
+                <h2>{authUser ? "Synced across Chrome profiles" : "Same timer on every profile"}</h2>
                 <p className="lede">
                   {cloudConfigured
-                    ? "The same email unlocks your sessions and settings on work, personal, or guest Chrome."
-                    : "Add Supabase keys to enable cloud sync across Chrome profiles."}
+                    ? "One email. Sessions and settings follow you."
+                    : "Sign-in isn’t on this copy yet. The timer still works on this profile."}
                 </p>
               </div>
-
-              {!cloudConfigured ? (
-                <p className="lede">
-                  Cloud sync needs a Supabase project. Add the keys in `.env.local`, then sign in here on every Chrome profile you use.
-                </p>
-              ) : null}
 
               {authUser ? (
                 <div className="account-body">
@@ -797,7 +805,7 @@ const App = () => {
                     <button className="ghost" disabled={authBusy} onClick={() => void handleSignOut()}>Log out</button>
                   </div>
                 </div>
-              ) : (
+              ) : cloudConfigured ? (
                 <div className="account-body">
                   <div className="auth-tabs segmented">
                     <button className={authMode === "signin" ? "active" : ""} onClick={() => setAuthMode("signin")}>Sign in</button>
@@ -825,7 +833,7 @@ const App = () => {
                   <button className="linkish" onClick={() => setShowPassword((value) => !value)}>
                     {showPassword ? "Hide password" : "Show password"}
                   </button>
-                  <button className="cta full" disabled={authBusy || !authEmail || !authPassword} onClick={() => void handleAuth()}>
+                  <button className="cta full amber" disabled={authBusy || !authEmail || !authPassword} onClick={() => void handleAuth()}>
                     {authMode === "signup" ? "Create account" : "Sign in"}
                   </button>
                   {authMode === "signin" ? (
@@ -834,14 +842,17 @@ const App = () => {
                     </button>
                   ) : null}
                 </div>
-              )}
+              ) : null}
 
               {authNotice ? <div className="account-notice">{authNotice}</div> : null}
               {authError ? <div className="account-error">{authError}</div> : null}
             </section>
 
-            <div className="meta-row">
-              <span>Space starts or pauses</span>
+            <div className="settings-foot">
+              <button className="back" type="button" onClick={() => setView("timer")}>
+                <BackIcon />
+                Timer
+              </button>
               <span>
                 <span className="kbd">Alt</span> <span className="kbd">Shift</span> <span className="kbd">P</span>
               </span>
