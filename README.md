@@ -35,8 +35,8 @@ Activity has today, your week, and your streak. Week is a bar chart. Month is a 
 To build from source you need [Node.js](https://nodejs.org/) 18 or newer:
 
 ```bash
-git clone https://github.com/shahjacobb/Lazha.git
-cd Lazha
+git clone https://github.com/shahjacobb/Lahza.git
+cd Lahza
 npm install
 npm run build
 ```

@@ -34,8 +34,8 @@ Lahza (لحظة) is said LAH-zah.
 **Language:** English (United States)
 **Promo video:** leave blank
 **Official URL:** None (unless you have a site in Search Console)
-**Homepage URL:** https://github.com/shahjacobb/Lazha
-**Support URL:** https://github.com/shahjacobb/Lazha/issues
+**Homepage URL:** https://github.com/shahjacobb/Lahza
+**Support URL:** https://github.com/shahjacobb/Lahza/issues
 **Mature content:** No
 **Item support:** On
 
