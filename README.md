@@ -28,19 +28,11 @@ Activity has today, your week, and your streak. Week is a bar chart. Month is a 
 
 ![Using Lahza](docs/demo.gif)
 
----
-
 ## Install
 
-[Download `lahza.zip`](release/lahza.zip). Unzip it.
+[Download `lahza.zip`](release/lahza.zip). Unzip it. In Chrome, open `chrome://extensions`, turn on Developer mode, and click **Load unpacked**. Choose the unzipped folder — the one that contains `manifest.json`. Pin Lahza.
 
-1. `chrome://extensions`
-2. Developer mode on
-3. **Load unpacked**
-4. Pick the folder that contains `manifest.json`
-5. Pin **Lahza**
-
-From source:
+To build from source you need [Node.js](https://nodejs.org/) 18 or newer:
 
 ```bash
 git clone https://github.com/shahjacobb/Lazha.git
@@ -49,20 +41,6 @@ npm install
 npm run build
 ```
 
-Load unpacked on **`dist`**. After you change code: `npm run build`, then **Reload**.
+Then load unpacked on the `dist` folder. After you edit the code, run `npm run build` again and click **Reload** on the extension card.
 
----
-
-## Notes
-
-The popup is Timer, Activity, and Settings. Settings has **← Timer** at the top. Session lengths first; sound and auto-start under that; account last.
-
-Cloud sync is optional. Wire it once with `docs/supabase.md`. Without that, the timer still works on this profile.
-
-Store listing paste: `docs/store/listing.md`. Color system: `docs/color-system.pdf`.
-
-```bash
-npm run build      # typecheck + dist/
-npm run package    # build + lahza.zip
-npm run preview    # Vite, /popup.html
-```
+Cloud sync is optional. If you want it, follow `docs/supabase.md`. The timer works without an account.

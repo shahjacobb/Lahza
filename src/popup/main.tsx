@@ -672,7 +672,6 @@ const App = () => {
             <div className="heading tight">
               <div>
                 <h1>Settings</h1>
-                <p>Session lengths. Everything else is optional.</p>
               </div>
             </div>
 
@@ -727,7 +726,6 @@ const App = () => {
             </section>
 
             <section className="settings-block">
-              <div className="settings-kicker">While it runs</div>
               <div className="settings-cluster">
                 <label className="settings-row">
                   <span className="settings-label">Start breaks automatically</span>
