@@ -109,6 +109,21 @@ const waitForText = async (send, text, timeoutMs = 8000) => {
   throw new Error(`Timed out waiting for "${text}"`);
 };
 
+const waitForChartBars = async (send, timeoutMs = 8000) => {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    const result = await send("Runtime.evaluate", {
+      expression: `document.querySelectorAll(".chart svg rect, .chart svg path").length > 3`,
+      returnByValue: true
+    });
+    if (result.result.value) {
+      return;
+    }
+    await sleep(120);
+  }
+  throw new Error("Timed out waiting for week chart bars");
+};
+
 const capture = async (send, file) => {
   const shot = await send("Page.captureScreenshot", {
     format: "png",
@@ -193,14 +208,17 @@ const main = async () => {
     await sleep(250);
 
     await clickText(send, "nav.tabbar button", "Activity");
-    await waitForText(send, "Activity");
+    await waitForText(send, "Last 7 days");
+    await waitForChartBars(send);
+    await sleep(200);
     i = await hold(send, "week", i, 8);
     await clickText(send, ".segmented button", "Month");
-    await sleep(250);
+    await waitForText(send, "active days");
+    await sleep(400);
     i = await hold(send, "month", i, 8);
 
     await clickText(send, "nav.tabbar button", "Settings");
-    await waitForText(send, "Durations, sound");
+    await waitForText(send, "Daily goal");
     i = await hold(send, "settings", i, 10);
 
     await clickText(send, "nav.tabbar button", "Timer");
@@ -209,8 +227,8 @@ const main = async () => {
 
     ws.close();
 
-    const gif = path.join(outDir, "demo.gif");
-    const mp4 = path.join(outDir, "demo.mp4");
+    const gif = path.join(outDir, "using.gif");
+    const mp4 = path.join(outDir, "using.mp4");
     await runFfmpeg([
       "-y",
       "-framerate",

@@ -15,18 +15,18 @@ Activity has today, your week, and your streak. Week is a bar chart. Month is a 
 *Lahza* (لحظة) is said **LAH-zah**.
 
 <p align="center">
-  <img src="docs/shots/timer.png" alt="Idle timer" width="240" />
-  <img src="docs/shots/running.png" alt="Focus in progress" width="240" />
-  <img src="docs/shots/settings.png" alt="Settings" width="240" />
+  <img src="docs/shots/idle.png" alt="Idle timer" width="240" />
+  <img src="docs/shots/live.png" alt="Focus in progress" width="240" />
+  <img src="docs/shots/prefs.png" alt="Settings" width="240" />
 </p>
 
 <p align="center">
-  <img src="docs/shots/activity.png" alt="Weekly activity" width="240" />
-  <img src="docs/shots/month.png" alt="Month heat map" width="240" />
-  <img src="docs/shots/complete.png" alt="Session complete" width="240" />
+  <img src="docs/shots/week.png" alt="Weekly activity" width="240" />
+  <img src="docs/shots/heat.png" alt="Month heat map" width="240" />
+  <img src="docs/shots/done.png" alt="Session complete" width="240" />
 </p>
 
-![Using Lahza](docs/demo.gif)
+![Using Lahza](docs/using.gif)
 
 ## Install
 
