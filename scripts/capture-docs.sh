@@ -31,7 +31,7 @@ shot() {
   echo "wrote $OUT/$name.png"
 }
 
-shot banner "$DOCS/docs/banners/moment.html" 1600 720
+shot cover "$DOCS/docs/banners/moment.html" 1600 720
 shot timer "$BASE/popup.html?shot=1&view=timer" 380 560
 shot running "$BASE/popup.html?shot=1&view=timer&running=1" 380 560
 shot activity "$BASE/popup.html?shot=1&view=activity" 380 560

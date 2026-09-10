@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/shots/banner.png" alt="Lahza — a quieter way to hold time" width="100%" />
+  <img src="docs/shots/cover.png" alt="Lahza — a quieter way to hold time" width="100%" />
 </p>
 
 # Lahza
