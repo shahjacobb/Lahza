@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Lahza",
   "version": "0.5.0",
-  "description": "Customizable focus timer for Chrome. Classic Pomodoro, or set your own session lengths.",
+  "description": "Lahza is a focus timer for Chrome. Classic Pomodoro, or set the minutes yourself. Pin it, and the icon keeps the time.",
   "permissions": ["storage", "alarms", "notifications", "offscreen"],
   "host_permissions": ["https://tiopzxojmnortiwbgfrx.supabase.co/*"],
   "background": {

@@ -30,8 +30,8 @@ We do not sell your data. The only third party in the picture is Supabase, and o
 
 ## Deleting your data
 
-Uninstalling the extension removes the on-device copy. If you have an account and want that deleted too, open an issue at [github.com/shahjacobb/Forge-Extension/issues](https://github.com/shahjacobb/Forge-Extension/issues) from the email you signed up with.
+Uninstalling the extension removes the on-device copy. If you have an account and want that deleted too, open an issue at [github.com/shahjacobb/Lahza/issues](https://github.com/shahjacobb/Lahza/issues) from the email you signed up with.
 
 ## Contact
 
-[github.com/shahjacobb/Forge-Extension](https://github.com/shahjacobb/Forge-Extension)
+[github.com/shahjacobb/Lahza](https://github.com/shahjacobb/Lahza)
