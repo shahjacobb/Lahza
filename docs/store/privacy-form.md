@@ -58,5 +58,5 @@ Leave the rest unchecked. Focus-session history is app data on the device (and o
 **Privacy policy URL**
 
 ```
-https://github.com/shahjacobb/Forge-Extension/blob/main/docs/privacy.md
+https://github.com/shahjacobb/Lazha/blob/main/docs/privacy.md
 ```

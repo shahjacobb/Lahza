@@ -43,8 +43,8 @@ Activity has today, your week, and your streak. Week is a bar chart. Month is a 
 From source:
 
 ```bash
-git clone https://github.com/shahjacobb/Forge-Extension.git
-cd Forge-Extension
+git clone https://github.com/shahjacobb/Lazha.git
+cd Lazha
 npm install
 npm run build
 ```
