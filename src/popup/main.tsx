@@ -444,7 +444,7 @@ const App = () => {
       ? "Paused — press space to resume"
       : `Next up: ${modeLabel(state.timer.mode)}`;
 
-  const chartColor = "#9a9588";
+  const chartColor = "#d8d0c0";
 
   return (
     <main className="app">
@@ -675,10 +675,11 @@ const App = () => {
                   { label: "Deep", focus: 50, brk: 10, long: 20 },
                   { label: "Sprint", focus: 15, brk: 3, long: 10 }
                 ].map((preset) => {
+                  const draft = settingsDraft ?? state.settings;
                   const active =
-                    settingsDraft?.focusMinutes === preset.focus &&
-                    settingsDraft?.breakMinutes === preset.brk &&
-                    settingsDraft?.longBreakMinutes === preset.long;
+                    Number(draft.focusMinutes) === preset.focus &&
+                    Number(draft.breakMinutes) === preset.brk &&
+                    Number(draft.longBreakMinutes) === preset.long;
                   return (
                     <button key={preset.label} className={`preset${active ? " active" : ""}`} onClick={() => applyPreset(preset.focus, preset.brk, preset.long)}>
                       <strong>{preset.label}</strong>

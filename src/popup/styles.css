@@ -40,33 +40,42 @@
 
 html {
   margin: 0;
-  min-height: 100%;
+  height: 560px;
   background: var(--canvas);
+}
+
+html[data-shot],
+html[data-shot] body,
+html[data-shot] #root,
+html[data-shot] .app {
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
 }
 
 html[data-shot] body {
   margin: 0;
   max-width: none;
   min-width: 0;
-  width: 100%;
-  min-height: 100vh;
-}
-
-html[data-shot] .app {
-  min-height: 100vh;
 }
 
 body {
   margin: 0 auto;
+  width: 380px;
   min-width: 360px;
   max-width: 380px;
-  min-height: 560px;
+  height: 560px;
   background: var(--canvas);
   color: var(--ink);
   font-family: Inter, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
   font-size: 13.5px;
   letter-spacing: -0.011em;
   box-shadow: none;
+}
+
+#root {
+  height: 100%;
 }
 
 button,
@@ -91,7 +100,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .app {
-  min-height: 560px;
+  height: 100%;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   background: var(--canvas);
@@ -225,6 +235,10 @@ input[type="number"]::-webkit-outer-spin-button {
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.view > * {
+  flex-shrink: 0;
 }
 
 .timer-view {
@@ -888,10 +902,19 @@ select.account-input {
   margin-bottom: 2px;
 }
 
-.preset.active,
 .preset:hover {
   border-color: var(--primary);
   color: var(--ink);
+}
+
+.preset.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.preset.active strong {
+  color: var(--on-primary);
 }
 
 .sound-row {
@@ -1076,10 +1099,17 @@ select.account-input {
   text-transform: uppercase;
 }
 
-.wide-page body,
-body.wide-page {
+html:has(body.wide-page),
+body.wide-page,
+body.wide-page #root {
+  width: 100%;
   max-width: none;
   min-width: 0;
+  height: auto;
+  min-height: 100vh;
+}
+
+body.wide-page {
   box-shadow: none;
 }
 

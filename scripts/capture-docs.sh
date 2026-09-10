@@ -32,9 +32,9 @@ shot() {
 }
 
 shot banner "$DOCS/docs/banners/moment.html" 1600 720
-shot timer "$BASE/popup.html?shot=1&view=timer" 380 620
-shot running "$BASE/popup.html?shot=1&view=timer&running=1" 380 620
-shot activity "$BASE/popup.html?shot=1&view=activity" 380 620
-shot month "$BASE/popup.html?shot=1&view=activity&range=month" 380 620
-shot settings "$BASE/popup.html?shot=1&view=settings" 380 620
-shot complete "$BASE/popup.html?shot=1&view=timer&modal=1" 380 620
+shot timer "$BASE/popup.html?shot=1&view=timer" 380 560
+shot running "$BASE/popup.html?shot=1&view=timer&running=1" 380 560
+shot activity "$BASE/popup.html?shot=1&view=activity" 380 560
+shot month "$BASE/popup.html?shot=1&view=activity&range=month" 380 560
+shot settings "$BASE/popup.html?shot=1&view=settings" 380 560
+shot complete "$BASE/popup.html?shot=1&view=timer&modal=1" 380 560
