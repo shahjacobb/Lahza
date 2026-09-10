@@ -91,19 +91,20 @@ const BackIcon = () => (
 
 const TimerRing = ({
   progress,
-  running,
-  paused
+  mode,
+  running
 }: {
   progress: number;
+  mode: TimerMode;
   running: boolean;
-  paused: boolean;
 }) => {
   const size = 228;
   const stroke = 10;
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - Math.max(0, Math.min(100, progress)) / 100);
-  const color = running ? "var(--amber)" : paused ? "var(--pearl)" : "var(--ready)";
+  const color =
+    mode === "longBreak" ? "var(--gold)" : mode === "break" ? "var(--success)" : "var(--primary)";
 
   return (
     <svg viewBox={`0 0 ${size} ${size}`}>
@@ -444,7 +445,7 @@ const App = () => {
       ? "Paused — press space to resume"
       : `Next up: ${modeLabel(state.timer.mode)}`;
 
-  const chartColor = "#d8d0c0";
+  const chartColor = "#d2ccc0";
 
   return (
     <main className="app">
@@ -486,18 +487,16 @@ const App = () => {
 
         {view === "timer" ? (
           <section className="view timer-view">
-            <div className="ring-wrap">
-              <TimerRing
-                progress={progressPct}
-                running={isRunning}
-                paused={state.timer.status === "paused"}
-              />
+            <div
+              className={`ring-wrap${isRunning ? " live" : ""}${state.timer.mode === "break" ? " break" : ""}${state.timer.mode === "longBreak" ? " long" : ""}`}
+            >
+              <TimerRing progress={progressPct} mode={state.timer.mode} running={isRunning} />
               <div className="ring-center">
                 <div className="mode-kicker">{modeLabel(state.timer.mode)}</div>
                 <div className="clock">{formatClock(remainingMs)}</div>
                 <div className="status-line">
                   <span
-                    className={`status-dot${isRunning ? " live" : state.timer.status === "paused" ? " hold" : " idle"}`}
+                    className={`status-dot${isRunning ? " live" : state.timer.status === "paused" ? " hold" : " idle"}${state.timer.mode === "break" ? " break" : ""}${state.timer.mode === "longBreak" ? " long" : ""}`}
                   />
                   {statusText}
                 </div>
@@ -518,7 +517,7 @@ const App = () => {
 
             <div className="actions">
               <button
-                className={`cta${isRunning ? " live" : state.timer.status === "paused" ? " resume" : " ready"}`}
+                className={`cta${isRunning ? " live" : ""}`}
                 onClick={() => void act({ type: isRunning ? "pause" : "start" })}
               >
                 {isRunning ? "Pause" : state.timer.status === "paused" ? `Resume ${modeLabel(state.timer.mode).toLowerCase()}` : `Start ${modeLabel(state.timer.mode).toLowerCase()}`}
@@ -644,7 +643,7 @@ const App = () => {
                   {monthData.days.map((day) => (
                     <div className={`calendar-day${day.isToday ? " today" : ""}${day.minutes > 0 ? " has-data" : ""}${day.isOutside ? " outside" : ""}`} key={day.key}>
                       {day.minutes > 0 ? (
-                        <div className="heat-bg" style={{ background: `rgba(159, 154, 136, ${0.12 + 0.42 * (day.minutes / maxDayMinutes)})` }} />
+                        <div className="heat-bg" style={{ background: `rgba(222, 212, 191, ${0.12 + 0.42 * (day.minutes / maxDayMinutes)})` }} />
                       ) : null}
                       <span>{day.day}</span>
                     </div>
@@ -834,7 +833,7 @@ const App = () => {
                   <button className="linkish" onClick={() => setShowPassword((value) => !value)}>
                     {showPassword ? "Hide password" : "Show password"}
                   </button>
-                  <button className="cta full amber" disabled={authBusy || !authEmail || !authPassword} onClick={() => void handleAuth()}>
+                  <button className="cta full" disabled={authBusy || !authEmail || !authPassword} onClick={() => void handleAuth()}>
                     {authMode === "signup" ? "Create account" : "Sign in"}
                   </button>
                   {authMode === "signin" ? (
