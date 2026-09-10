@@ -4,7 +4,17 @@ Paste these on **Store listing**. Drop the images from this folder.
 
 **Title** (from package): Lahza
 
-**Summary** (from package): Customizable focus timer for Chrome. Classic Pomodoro, or set your own session lengths.
+**Summary** (132 characters, GitHub About / store short text):
+
+```
+Lahza is a focus timer for Chrome. Classic Pomodoro, or set the minutes yourself. Pin it, and the icon keeps the time.
+```
+
+**GitHub About** (paste this in the repo description field):
+
+```
+Lahza is a focus timer for Chrome. Classic Pomodoro — 25 and 5 — or set the minutes yourself. Pin it, and the toolbar icon keeps the time. Activity has your week and a month heat map.
+```
 
 **Description:**
 

@@ -8,15 +8,15 @@
       body {
         margin: 0;
         height: 100%;
-        background: #4f4d47;
-        color: #e8e4dc;
+        background: #1f201b;
+        color: #f1ede3;
         font-family: Inter, "Segoe UI", system-ui, sans-serif;
       }
 
       .artboard {
         width: 1600px;
         height: 720px;
-        background: #58564f;
+        background: #292a24;
         display: grid;
         grid-template-columns: 1.2fr 0.8fr;
         overflow: hidden;
@@ -28,8 +28,8 @@
         position: absolute;
         inset: 0;
         background:
-          radial-gradient(circle at 78% 42%, rgba(201, 195, 180, 0.11), transparent 36%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 42%);
+          radial-gradient(circle at 78% 42%, rgba(222, 212, 191, 0.1), transparent 36%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 42%);
         pointer-events: none;
       }
 
@@ -50,7 +50,7 @@
         font-size: 13px;
         letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: #d4d1c8;
+        color: #aaa398;
         margin-bottom: 18px;
       }
 
@@ -66,13 +66,13 @@
         font-weight: 400;
         letter-spacing: -0.055em;
         line-height: 0.9;
-        color: #f3efe6;
+        color: #f1ede3;
       }
 
       .arabic {
         font-family: "Noto Naskh Arabic", "Times New Roman", serif;
         font-size: 42px;
-        color: #e6dfd2;
+        color: #ded4bf;
         letter-spacing: 0;
         line-height: 1;
       }
@@ -82,7 +82,7 @@
         max-width: 560px;
         font-size: 22px;
         line-height: 1.45;
-        color: #f0ece4;
+        color: #d2ccc0;
       }
 
       .pills {
@@ -93,9 +93,9 @@
       }
 
       .pills span {
-        border: 1px solid #8a877e;
-        background: #64625a;
-        color: #f0ece4;
+        border: 1px solid #5a5b51;
+        background: #373830;
+        color: #f1ede3;
         border-radius: 999px;
         padding: 8px 14px;
         font-size: 13px;
@@ -110,8 +110,8 @@
       .device {
         width: 320px;
         height: 520px;
-        background: #5e5c55;
-        border: 1px solid #7a776f;
+        background: #303129;
+        border: 1px solid #5a5b51;
         border-radius: 28px;
         padding: 28px 24px;
         box-sizing: border-box;
@@ -119,14 +119,14 @@
         flex-direction: column;
         align-items: center;
         gap: 18px;
-        box-shadow: 0 24px 60px rgba(28, 26, 22, 0.28);
+        box-shadow: 0 24px 60px rgba(8, 8, 6, 0.4);
       }
 
       .device-top {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        color: #d4d1c8;
+        color: #aaa398;
         font-size: 13px;
       }
 
@@ -134,9 +134,10 @@
         width: 210px;
         height: 210px;
         border-radius: 50%;
-        background: conic-gradient(#c9c3b4 0 72deg, #6a685f 72deg 360deg);
+        background: conic-gradient(#ded4bf 0 72deg, #303129 72deg 360deg);
         mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 9px));
         -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 9px));
+        box-shadow: 0 0 48px 8px rgba(222, 212, 191, 0.16);
       }
 
       .time {
@@ -148,7 +149,7 @@
         display: block;
         letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: #c4c0b6;
+        color: #aaa398;
         font-size: 11px;
         margin-bottom: 8px;
       }
@@ -158,14 +159,14 @@
         font-size: 48px;
         font-weight: 500;
         letter-spacing: -0.06em;
-        color: #f0ece4;
+        color: #f1ede3;
       }
 
       .cta {
         margin-top: auto;
         width: 100%;
-        background: #c9c3b4;
-        color: #3c3b36;
+        background: #ded4bf;
+        color: #292a24;
         border-radius: 10px;
         text-align: center;
         padding: 14px 12px;
@@ -176,13 +177,13 @@
   <body>
     <div class="artboard">
       <div class="copy">
-        <div class="kicker">Customizable focus timer for Chrome</div>
+        <div class="kicker">A quieter way to hold time</div>
         <div class="name-row">
           <h1>Lahza</h1>
           <span class="arabic" lang="ar" dir="rtl">لحظة</span>
         </div>
         <p>
-          Classic Pomodoro, or set the minutes yourself. Pin it, and the icon keeps the time.
+          A focus timer for Chrome. Classic Pomodoro, or set the minutes yourself. Pin it, and the icon keeps the time.
         </p>
         <div class="pills">
           <span>Focus</span>

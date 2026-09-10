@@ -142,6 +142,7 @@ const chartTooltipStyle = {
 };
 
 const previewParams = new URLSearchParams(typeof window === "undefined" ? "" : window.location.search);
+const isShot = previewParams.has("shot");
 const previewDemoMs = Number(previewParams.get("demoMs"));
 const previewView = ((): PopupView => {
   const value = previewParams.get("view");
@@ -604,14 +605,22 @@ const App = () => {
                   </div>
                 </div>
                 <div className="chart">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={viewedWeekData}>
+                  {isShot ? (
+                    <BarChart width={348} height={168} data={viewedWeekData}>
                       <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fill: "currentColor", fontSize: 11 }} />
                       <YAxis axisLine={false} tickLine={false} width={28} tick={{ fill: "currentColor", fontSize: 10 }} tickFormatter={(value: number) => `${value}m`} />
-                      <Tooltip cursor={{ fill: "var(--primary-soft)" }} contentStyle={chartTooltipStyle} formatter={(value: number) => [`${value} min`, "Focus"]} />
                       <Bar dataKey="minutes" fill={chartColor} radius={[4, 4, 1, 1]} minPointSize={viewedWeekTotal === 0 ? 0 : 2} />
                     </BarChart>
-                  </ResponsiveContainer>
+                  ) : (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={viewedWeekData}>
+                        <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fill: "currentColor", fontSize: 11 }} />
+                        <YAxis axisLine={false} tickLine={false} width={28} tick={{ fill: "currentColor", fontSize: 10 }} tickFormatter={(value: number) => `${value}m`} />
+                        <Tooltip cursor={{ fill: "var(--primary-soft)" }} contentStyle={chartTooltipStyle} formatter={(value: number) => [`${value} min`, "Focus"]} />
+                        <Bar dataKey="minutes" fill={chartColor} radius={[4, 4, 1, 1]} minPointSize={viewedWeekTotal === 0 ? 0 : 2} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  )}
                 </div>
                 {viewedWeekTotal === 0 ? <div className="activity-empty">No focus yet this week. Start a session and it lands here.</div> : null}
                 <div className="activity-list">
