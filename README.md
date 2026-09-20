@@ -4,6 +4,8 @@
 
 # Lahza
 
+Now officially live on the [Chrome Web Store](https://chromewebstore.google.com/detail/lahza/okgndimocefoedonmgcgpnknhphaehkc).
+
 Lahza is a focus timer for Chrome. You can run a classic Pomodoro — 25 minutes of work, 5 of rest — or set the lengths yourself. After four focus sessions it offers a longer break.
 
 Pin it on the toolbar. While a session is running, the icon shows the time you have left. When it ends, Chrome sends a notification. There’s a chime too, if you leave sound on.
@@ -30,7 +32,9 @@ Activity has today, your week, and your streak. Week is a bar chart. Month is a 
 
 ## Install
 
-[Download `lahza.zip`](release/lahza.zip). Unzip it. In Chrome, open `chrome://extensions`, turn on Developer mode, and click **Load unpacked**. Choose the unzipped folder — the one that contains `manifest.json`. Pin Lahza.
+[Add Lahza from the Chrome Web Store](https://chromewebstore.google.com/detail/lahza/okgndimocefoedonmgcgpnknhphaehkc).
+
+To try a zip instead, [download `lahza.zip`](release/lahza.zip). Unzip it. In Chrome, open `chrome://extensions`, turn on Developer mode, and click **Load unpacked**. Choose the unzipped folder — the one that contains `manifest.json`. Pin Lahza.
 
 To build from source you need [Node.js](https://nodejs.org/) 18 or newer:
 

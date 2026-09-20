@@ -1,5 +1,7 @@
 # Chrome Web Store listing
 
+Live listing: https://chromewebstore.google.com/detail/lahza/okgndimocefoedonmgcgpnknhphaehkc
+
 Paste these on **Store listing**. Drop the images from this folder.
 
 **Title** (from package): Lahza
