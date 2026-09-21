@@ -51,7 +51,9 @@ All JavaScript is inside the extension package. We don’t load scripts from the
 - Personally identifiable information (email, and a display name if they type one — only if they create an account)
 - Authentication information (email and password for that optional account; login is handled by Supabase)
 
-Leave the rest unchecked. Focus-session history is app data on the device (and on Supabase if they sign in). It is not “user activity” in the keystroke / browsing sense.
+Leave the rest unchecked, including **Location**. The live listing currently shows Location. Uncheck it. We do not collect location.
+
+Focus-session history is app data on the device (and on Supabase if they sign in). It is not “user activity” in the keystroke / browsing sense.
 
 **Certify all three boxes.** Yes — we don’t sell data, don’t use it off-purpose, don’t use it for lending.
 

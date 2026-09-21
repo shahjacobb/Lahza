@@ -41,6 +41,8 @@ Lahza (لحظة) is said LAH-zah.
 **Mature content:** No
 **Item support:** On
 
+Re-upload the files below on the Store listing tab. GitHub does not push images to the Chrome Web Store.
+
 Images (JPEG or 24-bit PNG, no alpha):
 
 - Store icon 128×128 (24-bit PNG, no alpha): `icon-128.png`
