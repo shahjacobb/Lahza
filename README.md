@@ -33,18 +33,3 @@ Activity has today, your week, and your streak. Week is a bar chart. Month is a 
 ## Install
 
 [Add Lahza from the Chrome Web Store](https://chromewebstore.google.com/detail/lahza/okgndimocefoedonmgcgpnknhphaehkc).
-
-To try a zip instead, [download `lahza.zip`](release/lahza.zip). Unzip it. In Chrome, open `chrome://extensions`, turn on Developer mode, and click **Load unpacked**. Choose the unzipped folder — the one that contains `manifest.json`. Pin Lahza.
-
-To build from source you need [Node.js](https://nodejs.org/) 18 or newer:
-
-```bash
-git clone https://github.com/shahjacobb/Lahza.git
-cd Lahza
-npm install
-npm run build
-```
-
-Then load unpacked on the `dist` folder. After you edit the code, run `npm run build` again and click **Reload** on the extension card.
-
-Cloud sync is optional. If you want it, follow `docs/supabase.md`. The timer works without an account.
